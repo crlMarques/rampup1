@@ -1,0 +1,423 @@
+{
+    "pratos": [
+        {
+            "name": "Pizza",
+            "ingredientes": [
+                {
+                    "name": "massa de pizza",
+                    "quantity": 1
+                },
+                {
+                    "name": "molho de tomate",
+                    "quantity": 1
+                },
+                {
+                    "name": "queijo mussarela",
+                    "quantity": 2
+                },
+                {
+                    "name": "tomate",
+                    "quantity": 1
+                },
+                {
+                    "name": "manjericão",
+                    "quantity": 1
+                },
+                {
+                    "name": "azeite de oliva",
+                    "quantity": 1
+                },
+                {
+                    "name": "sal",
+                    "quantity": 1
+                },
+                {
+                    "name": "pimenta",
+                    "quantity": 1
+                }
+            ]
+        },
+        {
+            "name": "X-Burguer",
+            "ingredientes": [
+                {
+                    "name": "hamburguer",
+                    "quantity": 1
+                },
+                {
+                    "name": "pão de hamburguer",
+                    "quantity": 1
+                },
+                {
+                    "name": "queijo",
+                    "quantity": 1
+                },
+                {
+                    "name": "alface",
+                    "quantity": 1
+                },
+                {
+                    "name": "tomate",
+                    "quantity": 1
+                },
+                {
+                    "name": "cebola",
+                    "quantity": 1
+                },
+                {
+                    "name": "molho de maionese",
+                    "quantity": 1
+                },
+                {
+                    "name": "sal",
+                    "quantity": 1
+                },
+                {
+                    "name": "pimenta",
+                    "quantity": 1
+                }
+            ]
+        },
+        {
+            "name": "Lasanha",
+            "ingredientes": [
+                {
+                    "name": "massa de lasanha",
+                    "quantity": 2
+                },
+                {
+                    "name": "carne moída",
+                    "quantity": 5
+                },
+                {
+                    "name": "molho de tomate",
+                    "quantity": 4
+                },
+                {
+                    "name": "queijo",
+                    "quantity": 2
+                },
+                {
+                    "name": "cebola",
+                    "quantity": 1
+                },
+                {
+                    "name": "alho",
+                    "quantity": 2
+                },
+                {
+                    "name": "sal",
+                    "quantity": 1
+                },
+                {
+                    "name": "pimenta",
+                    "quantity": 1
+                }
+            ]
+        },
+        {
+            "name": "Salmão Grelhado",
+            "ingredientes": [
+                {
+                    "name": "salmão",
+                    "quantity": 2
+                },
+                {
+                    "name": "azeite de oliva",
+                    "quantity": 2
+                },
+                {
+                    "name": "limão",
+                    "quantity": 1
+                },
+                {
+                    "name": "sal",
+                    "quantity": 1
+                },
+                {
+                    "name": "pimenta",
+                    "quantity": 1
+                },
+                {
+                    "name": "tempero a gosto",
+                    "quantity": 1
+                }
+            ]
+        },
+        {
+            "name": "Risoto de Cogumelos",
+            "ingredientes": [
+                {
+                    "name": "arroz arbóreo",
+                    "quantity": 2
+                },
+                {
+                    "name": "cogumelos",
+                    "quantity": 2
+                },
+                {
+                    "name": "cebola",
+                    "quantity": 1
+                },
+                {
+                    "name": "manteiga",
+                    "quantity": 2
+                },
+                {
+                    "name": "caldo de legumes",
+                    "quantity": 5
+                },
+                {
+                    "name": "vinho branco",
+                    "quantity": 1
+                },
+                {
+                    "name": "queijo parmesão",
+                    "quantity": 1
+                },
+                {
+                    "name": "sal",
+                    "quantity": 1
+                },
+                {
+                    "name": "pimenta",
+                    "quantity": 1
+                }
+            ]
+        },
+        {
+            "name": "Strogonoff de Frango",
+            "ingredientes": [
+                {
+                    "name": "peito de frango",
+                    "quantity": 5
+                },
+                {
+                    "name": "cebola",
+                    "quantity": 1
+                },
+                {
+                    "name": "alho",
+                    "quantity": 2
+                },
+                {
+                    "name": "manteiga",
+                    "quantity": 2
+                },
+                {
+                    "name": "ketchup",
+                    "quantity": 4
+                },
+                {
+                    "name": "mostarda",
+                    "quantity": 2
+                },
+                {
+                    "name": "molho de tomate",
+                    "quantity": 2
+                },
+                {
+                    "name": "creme de leite",
+                    "quantity": 2
+                },
+                {
+                    "name": "sal",
+                    "quantity": 1
+                },
+                {
+                    "name": "pimenta",
+                    "quantity": 1
+                }
+            ]
+        },
+        {
+            "name": "Feijoada",
+            "ingredientes": [
+                {
+                    "name": "feijão preto",
+                    "quantity": 5
+                },
+                {
+                    "name": "carne de porco",
+                    "quantity": 3
+                },
+                {
+                    "name": "linguiça",
+                    "quantity": 2
+                },
+                {
+                    "name": "cebola",
+                    "quantity": 1
+                },
+                {
+                    "name": "alho",
+                    "quantity": 2
+                },
+                {
+                    "name": "sal",
+                    "quantity": 1
+                },
+                {
+                    "name": "pimenta",
+                    "quantity": 1
+                },
+                {
+                    "name": "folhas de louro",
+                    "quantity": 2
+                },
+                {
+                    "name": "farinha de mandioca",
+                    "quantity": 1
+                }
+            ]
+        },
+        {
+            "name": "Nhoque de Batata",
+            "ingredientes": [
+                {
+                    "name": "batatas",
+                    "quantity": 5
+                },
+                {
+                    "name": "farinha de trigo",
+                    "quantity": 3
+                },
+                {
+                    "name": "ovo",
+                    "quantity": 1
+                },
+                {
+                    "name": "manteiga",
+                    "quantity": 3
+                },
+                {
+                    "name": "queijo parmesão ralado",
+                    "quantity": 1
+                },
+                {
+                    "name": "molho de tomate",
+                    "quantity": 4
+                },
+                {
+                    "name": "manjericão",
+                    "quantity": 1
+                },
+                {
+                    "name": "sal",
+                    "quantity": 1
+                },
+                {
+                    "name": "pimenta",
+                    "quantity": 1
+                }
+            ]
+        },
+        {
+            "name": "Salada Caesar",
+            "ingredientes": [
+                {
+                    "name": "alface romana",
+                    "quantity": 1
+                },
+                {
+                    "name": "frango grelhado",
+                    "quantity": 2
+                },
+                {
+                    "name": "croutons",
+                    "quantity": 1
+                },
+                {
+                    "name": "queijo parmesão ralado",
+                    "quantity": 1
+                },
+                {
+                    "name": "molho Caesar",
+                    "quantity": 1
+                }
+            ]
+        },
+        {
+            "name": "Hambúrguer com Batata Frita",
+            "ingredientes": [
+                {
+                    "name": "carne moída",
+                    "quantity": 5
+                },
+                {
+                    "name": "pão de hambúrguer",
+                    "quantity": 4
+                },
+                {
+                    "name": "queijo cheddar",
+                    "quantity": 4
+                },
+                {
+                    "name": "alface",
+                    "quantity": 1
+                },
+                {
+                    "name": "tomate",
+                    "quantity": 1
+                },
+                {
+                    "name": "cebola roxa",
+                    "quantity": 1
+                },
+                {
+                    "name": "batatas",
+                    "quantity": 5
+                },
+                {
+                    "name": "óleo vegetal",
+                    "quantity": 1
+                },
+                {
+                    "name": "sal",
+                    "quantity": 1
+                },
+                {
+                    "name": "pimenta",
+                    "quantity": 1
+                }
+            ]
+        },
+        {
+            "name": "Penne ao Molho Pesto",
+            "ingredientes": [
+                {
+                    "name": "penne",
+                    "quantity": 3
+                },
+                {
+                    "name": "manjericão fresco",
+                    "quantity": 1
+                },
+                {
+                    "name": "queijo parmesão ralado",
+                    "quantity": 1
+                },
+                {
+                    "name": "castanha-de-caju",
+                    "quantity": 1
+                },
+                {
+                    "name": "alho",
+                    "quantity": 2
+                },
+                {
+                    "name": "azeite de oliva",
+                    "quantity": 1
+                },
+                {
+                    "name": "sal",
+                    "quantity": 1
+                },
+                {
+                    "name": "pimenta",
+                    "quantity": 1
+                }
+            ]
+        }
+    ]
+}
