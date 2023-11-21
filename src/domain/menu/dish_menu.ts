@@ -1,14 +1,18 @@
 import { Request, Response } from "express";
 import data from "../../infra/menu.json"
+import Dish  from "../../db/models/dish"
 
-export function getMenu(req: Request, res: Response) {
+export function getMenuDishes(dish_name: String) {
 
-    console.log(req.params, req.query, req.body);
-    if (req.query == null) {
-        res.send("Request Empty")
+    Dish.findAll()
+        .then(products => {
+            console.log('All dishes:');
+        products.forEach(product => {
+            console.log(product);
+        });
+  })
+  .catch(err => {
+    console.error('Error to get product:', err);
+  });
 
-    } else if (req.query.prato == 'all') {
-        res.json(data)
-        console.log("passou");
-    }
 }
