@@ -1,11 +1,10 @@
 import { Router, Request, Response } from 'express';
-import { increaseStock } from '../../domain/stock/increase_stock';
+import { stockController } from './stockController';
 
 const stockRouter = Router();
 
 stockRouter.put('/stock', (req: Request, res: Response) => {
-    increaseStock(req, res);
+    stockController(req, res);
 })
-
 
 export default stockRouter

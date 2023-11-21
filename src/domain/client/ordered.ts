@@ -25,16 +25,14 @@ export async function createOrder(name: String, ingredients: {name: string, quan
                     } else {
                       console.log('Stock not found or quantity is zero');
                     }
-                  })
-                  .catch(error => {
+                  }).catch(error => {
                     console.error('Error when searching for stock:', error);
                   });
             });
         } else {
             throw new Error('Dish already register');
         }
-    })
-    .catch(error => {
+    }).catch(error => {
         console.error('Error to search Name:', error);
     });
 }
