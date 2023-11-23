@@ -1,20 +1,20 @@
 import { Request, Response } from "express";
 import Stock  from "../../db/models/stocks"
 
-export function increaseStock(name: string, quantity: number) {
-    Stock.findOrCreate({ 
-        where: { name: name },
-        defaults: {
-            quantity: quantity
-        }
-    }).then(([ingredient, newIngredient]) => {
-        if (!newIngredient) {
-            ingredient.increment('quantity', { by: quantity });
-            console.log(`Ingredient quantity ${name} updated.`);
-        }else{
-            console.log(`New ingredient ${name} creat.`);
-        }
-    }).catch (error => {
-        console.error('Erro ao atualizar ou criar o ingrediente:', error);
-    });
+export async function increaseStock(stockList: { name: string, quantity: number }[]) {
+    for (let stock of stockList) {
+        const [updateStock, newStock] = await Stock.findOrCreate({ 
+            where: { name: stock.name },
+            defaults: {
+                quantity: stock.quantity
+            }
+        })
+        if (updateStock) {
+            await updateStock.increment('quantity', { by: stock.quantity });
+            var update = "Stock updated"
+          } else {
+            var newIngredient = "New ingredient included"
+          }
+    }
+    //return true preciso validar essa saida
 }

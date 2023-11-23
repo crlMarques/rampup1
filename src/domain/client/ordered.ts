@@ -1,31 +1,24 @@
 import { Request, Response } from "express";
-import Dish  from "../../db/models/dish"
-import Stock  from "../../db/models/stocks"
-import Dishstock  from "../../db/models/dishes_stocks"
+import Dish from "../../db/models/dish"
+import Stock from "../../db/models/stocks"
+import Dishstock from "../../db/models/dishes_stocks"
 import { Op } from 'sequelize';
 
-export async function createOrder(dishList: {dishId: number}[]) {
-  for
-  let dishesMenu = Dishstock.findOne({ where: { dishId: dishId } })
-      .then(existingDish => {
-          if (existingDish) {
-              ingredients.forEach((ingrediente_list: { stockId: number, quantity: number }) => {
-                const requestQuantity = existingDish.dataValues.quantity + ingrediente_list.quantity
-                Stock.decrement('quantity', {
-                  by: requestQuantity,
-                  where: { id: ingrediente_list.stockId }
-                })
-                .then(() => {
-                  return true
-                })
-                .catch((error) => {
-                  throw error('Error to decrease stock quantity:', error);
-                })
-              });
-          } else {
-              throw new Error('Dish already register');
-          }
-      }).catch(error => {
-          console.error('Error to search dishId:', error);
-    });
+export async function createOrder(dishList: { dishId: number }[]) {
+  for (let dish of dishList) {
+    let dishExist = await Dish.findOne({ where: { id: dish.dishId } })
+    if (!dishExist) {
+      throw new Error("Dishes not exists")
+    }
+    let dishesStock = await Dishstock.findAll({ where: { dishId: dish.dishId } })
+    if (dishesStock.length == 0) {
+      throw new Error("Dish not exists in dishes_stock table")
+    }
+    for (let dishesObject of dishesStock) {
+      await Stock.decrement('quantity', {
+        by: dishesObject.dataValues.quantity,
+        where: { id: dishesObject.dataValues.stockId }
+      });
+    }
+  }
 }

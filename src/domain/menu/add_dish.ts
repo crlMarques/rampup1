@@ -1,20 +1,19 @@
 import { Request, Response } from "express";
 import Dish  from "../../db/models/dish"
 
-export function addDish(dish_name: String) {
-    Dish.findOne({ where: { name: dish_name } })
-    .then(existingDish => {
-        if (existingDish) {
-            throw new Error('Dish already register');
+export async function addDish(dishList: { name: string }[]) {
+    for (let dishName of dishList) {
+        let dishExist = await Dish.findCreateFind({ where: { name: dishName.name } })
+        if (!dishExist) {
+            const [dish, newDish] = await Dish.findCreateFind({
+                where: { name: dishName.name },
+                defaults: { name: dishName.name },
+            });
+            if (!newDish) {
+                throw new Error("Error in generate new Dish")
+            }
         }else{
-            Dish.destroy({ where: {
-                name: dish_name 
-            }})
-            .then(newDish => {
-                console.log('New dish created:', newDish);
-              }).catch(err => {
-                console.error('Error to creat Dish:', err);
-              });
+            throw new Error("Dish already exists")
         }
-    });
+    }
 }
