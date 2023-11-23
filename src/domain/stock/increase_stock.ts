@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import Stock  from "../../db/models/stocks"
 
-export async function increaseStock(name: string, quantity: number) {
-
+export function increaseStock(name: string, quantity: number) {
     Stock.findOrCreate({ 
         where: { name: name },
         defaults: {

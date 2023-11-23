@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Dish  from "../../db/models/dish"
 
-export async function addDish(dish_name: String) {
+export function addDish(dish_name: String) {
     Dish.findOne({ where: { name: dish_name } })
     .then(existingDish => {
         if (existingDish) {
