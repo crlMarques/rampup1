@@ -5,6 +5,7 @@ import Dishstock from "../../db/models/dishes_stocks"
 import { Op } from 'sequelize';
 
 export async function createOrder(dishList: { dishId: number }[]) {
+  let result = "Dish order:\n"
   for (let dish of dishList) {
     let dishExist = await Dish.findOne({ where: { id: dish.dishId } })
     if (!dishExist) {
@@ -20,5 +21,8 @@ export async function createOrder(dishList: { dishId: number }[]) {
         where: { id: dishesObject.dataValues.stockId }
       });
     }
+    result +=`- ${dishExist.dataValues.name}\n`
   }
+
+  return result
 }

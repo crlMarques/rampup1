@@ -3,8 +3,8 @@ import { getMenuDishes } from "../../domain/menu/dish_menu";
 
 export async function getMenuController(req: Request, res: Response) {
     try {
-        await getMenuDishes();
-        res.status(200).json({ message: 'Função retornou true' });
+        let dish = await getMenuDishes();
+        res.status(200).json({ message: dish });
     } catch (error: any) {
         res.status(500).json({ message: error.message });
     }

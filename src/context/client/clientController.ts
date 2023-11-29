@@ -4,10 +4,9 @@ import { createOrder } from "../../domain/client/ordered";
 export async function orderController(req: Request, res: Response) {
     let dishList = req.body
     try {
-        await createOrder(dishList)
-        res.status(200).json({ message: 'Função retornou true' });
+        let dish = await createOrder(dishList)
+        res.status(200).json({ message: dish });
     } catch (error: any) {
         res.status(500).json({ message: error.message });
-    }
-    
+    }   
 }

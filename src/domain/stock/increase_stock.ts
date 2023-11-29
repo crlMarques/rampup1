@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import Stock  from "../../db/models/stocks"
 
 export async function increaseStock(stockList: { name: string, quantity: number }[]) {
+    let result = "Stock updated,\n"
     for (let stock of stockList) {
         const [updateStock, newStock] = await Stock.findOrCreate({ 
             where: { name: stock.name },
@@ -11,10 +12,8 @@ export async function increaseStock(stockList: { name: string, quantity: number 
         })
         if (updateStock) {
             await updateStock.increment('quantity', { by: stock.quantity });
-            var update = "Stock updated"
-          } else {
-            var newIngredient = "New ingredient included"
-          }
+            result +=`ingredient: ${stock.name}, quantity: ${updateStock.dataValues.quantity}\n`
+        } 
     }
-    //return true preciso validar essa saida
+    return result
 }
