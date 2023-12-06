@@ -20,8 +20,10 @@
   "devDependencies": {
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.10",
+    "@types/jsonapi-serializer": "^3.6.8",
     "@types/node": "^20.2.5",
     "jest": "^29.7.0",
+    "jsonapi-serializer": "^3.6.9",
     "nodemon": "^2.0.22",
     "sequelize-cli": "^6.6.1",
     "ts-jest": "^29.1.1",

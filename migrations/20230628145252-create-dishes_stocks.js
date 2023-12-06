@@ -29,6 +29,7 @@ module.exports = {
           },
           key: 'id'
         },
+        onDelete: 'CASCADE',
         allowNull: false
       },
       stockId: {
@@ -38,6 +39,7 @@ module.exports = {
             tableName: 'stocks',
             schema: 'public'
           },
+          onDelete: 'CASCADE',
           key: 'id'
         },
         allowNull: false

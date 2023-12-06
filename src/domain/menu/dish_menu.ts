@@ -1,15 +1,17 @@
 import { Request, Response } from "express";
-import data from "../../infra/menu.json"
 import Dish  from "../../db/models/dish"
+import { Serializer } from "jsonapi-serializer";
 
 export async function getMenuDishes() {
-  let result = "Dish menu:\n"
+  const serializer = new Serializer('dishes', {
+    attributes: ['name'],
+  });
   let dishList = await Dish.findAll()
   if (!dishList) {
     throw new Error("Dishes not exists")
   }
-  for (let dishName of dishList) {
-    result +=`${dishName.dataValues.name}\n`
-  }
-  return result
+  // console.log(dishesDataValues)
+  const serializedData = serializer.serialize(dishList);
+  //console.log("Bora ver o serialize:", serializedData.data)
+  return serializedData.data
 }

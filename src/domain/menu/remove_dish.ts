@@ -1,17 +1,31 @@
 import { Request, Response } from "express";
-import Dish  from "../../db/models/dish"
+import Dish  from "../../db/models/dish";
+import { Serializer } from "jsonapi-serializer";
+import sequelize from "../../db/config"
 
 export async function removeDish(dishList: { name: string }[]) {
-    let result = "Menu updated:\n"
-    for (let dishName of dishList) {
-        let dishExist = await Dish.findOne({ where: { name: dishName.name } })
-        if (!dishExist) {
-            throw new Error("Dishes not exists")
-        }
-        await Dish.destroy({ where: {
-            name: dishName.name 
-        }})
-        result +=`Dish removed: ${dishName.name}\n`
+    const t = await sequelize.transaction();
+    const serializer = new Serializer('dishes', {
+        attributes: ['name'],
+      });
+    try {
+        let dishRemoveList: {}[] = [];
+        for (let dishName of dishList) {
+            let dishExist = await Dish.findOne({ where: { name: dishName.name }, transaction: t } )
+            if (!dishExist) {
+                throw new Error(`Dish not exists: ${dishName.name}`)
+            }
+            await Dish.destroy({ where: {
+                name: dishName.name 
+            }, transaction: t })
+            console.log("destruiu")
+            dishRemoveList.push(dishExist)
+        }// opcao de remover o laco for, dessa forma passaria um array para buscar e deletar os dados.
+        await t.commit();
+        return serializer.serialize(dishRemoveList).data
+    }catch (error: any) {
+        await t.rollback();
+        throw new Error(error.message)
     }
-    return result
+   
 }
