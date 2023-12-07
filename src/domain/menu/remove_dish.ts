@@ -18,11 +18,11 @@ export async function removeDish(dishList: { name: string }[]) {
             await Dish.destroy({ where: {
                 name: dishName.name 
             }, transaction: t })
-            console.log("destruiu")
             dishRemoveList.push(dishExist)
         }// opcao de remover o laco for, dessa forma passaria um array para buscar e deletar os dados.
         await t.commit();
-        return serializer.serialize(dishRemoveList).data
+        let serializedDish = serializer.serialize(dishRemoveList).data;
+        return serializedDish
     }catch (error: any) {
         await t.rollback();
         throw new Error(error.message)

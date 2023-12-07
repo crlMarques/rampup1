@@ -21,7 +21,9 @@ export async function addDish(dishList: { name: string }[]) {
                 throw new Error(`Error in generate new Dish, ${dishName.name} already exist`)
             }
         }
-        return serializer.serialize(dishAddList).data
+        await t.commit();
+        let serializedDish = serializer.serialize(dishAddList).data
+        return serializedDish
     }catch (error: any) {
         await t.rollback();
         throw new Error(error.message)
