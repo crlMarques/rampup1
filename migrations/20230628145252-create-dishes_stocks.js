@@ -43,6 +43,18 @@ module.exports = {
           key: 'id'
         },
         allowNull: false
+      },
+      ingredient: {
+        type: Sequelize.DataTypes.STRING,
+        references: {
+          model: {
+            tableName: 'stocks',
+            schema: 'public'
+          },
+          onDelete: 'CASCADE',
+          key: 'name'
+        },
+        allowNull: false
       }
     });
   },

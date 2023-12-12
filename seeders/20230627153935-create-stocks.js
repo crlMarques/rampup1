@@ -40,10 +40,6 @@ module.exports = {
             quantity: 10
         },
         {
-            name: "azeite de oliva",
-            quantity: 50
-        },
-        {
             name: "limão",
             quantity: 10
         },

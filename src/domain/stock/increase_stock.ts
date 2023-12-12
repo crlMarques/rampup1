@@ -18,7 +18,6 @@ export async function increaseStock(stockList: { name: string, quantity: number 
                 }
             })
             if (!newStock) {
-                console.log("\n\nNovo ingrediente tbm:",updateStock )
                 await updateStock.increment('quantity', { by: stock.quantity });
                 ingredientList.push(updateStock)
             }else{

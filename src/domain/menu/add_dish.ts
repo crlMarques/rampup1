@@ -11,7 +11,7 @@ export async function addDish(dishList: { name: string }[]) {
     try {
         let dishAddList: {}[] = [];
         for (let dishName of dishList) {
-            const [dish, newDish] = await Dish.findCreateFind({
+            const [dish, newDish] = await Dish.findOrCreate({
                 where: { name: dishName.name },
                 defaults: { name: dishName.name },
                 transaction: t
@@ -21,8 +21,8 @@ export async function addDish(dishList: { name: string }[]) {
                 throw new Error(`Error in generate new Dish, ${dishName.name} already exist`)
             }
         }
-        await t.commit();
         let serializedDish = serializer.serialize(dishAddList).data
+        await t.commit();
         return serializedDish
     }catch (error: any) {
         await t.rollback();
