@@ -4,55 +4,38 @@ import Stock from "../../db/models/stocks"
 import DishStock from "../../db/models/dishes_stocks"
 import sequelize from "../../db/config"
 import { Serializer } from "jsonapi-serializer";
-import { Op } from "sequelize"
+import { Op, Transaction } from "sequelize"
 
-export async function addDishSTock(dishDataList:{ name:string, ingredient: { name: string, quantity: number, dishId: number, stockId: number }[]}[]) {
-    const t = await sequelize.transaction();
-    const serializer = new Serializer('dishes', {
-        attributes: ['name'],
+export async function addDishStock(dishDataList:{name: string, quantity: number}[], dishId:number, t:Transaction ) {
+    const serializer = new Serializer('ingredient', {
+        attributes: ['ingredient', 'stockId', 'quantity'],
     });
-    try {
         let dishList: {}[] = [];
-        //dishDataList.forEach(async data => {
-        for (let data of dishDataList) {
-            for (let dishData of data.ingredient) {
-                let ingredientExist = await Stock.findOne({ where: { name: dishData.name }, transaction: t } )
-                if (!ingredientExist) {
-                    throw new Error(`Ingredient not exists: ${dishData.name}`)
-                }
-                console.log("\n\nVendo o ingredientExist:", ingredientExist)
-                console.log("\n\nVendo o dishData:", dishData)
-                const [dishStock, newDishStock] = await DishStock.findOrCreate({
-                    where: {
-                        dishId: dishData.dishId,
-                        stockId: dishData.stockId
-                        // [Op.and]: [
-                        //     { dishId: {[Op.not]: dishData.dishId}  },
-                        //     { stockId: {[Op.not]: dishData.stockId}  }
-                        // ]
-                    },
-                    defaults: {
-                        ingredient: dishData.name,
-                        quantity: dishData.quantity,
-                        dishId: dishData.dishId,
-                        stockId: dishData.stockId
-                    },
-                    transaction: t
-                });
-                console.log("\n\nVendo o dishSTock:", dishStock)
-                dishList.push(dishStock)
-                if (!newDishStock) {
-                    console.log(newDishStock,dishStock)
-                    throw new Error(`Error in generate new Dish , ${dishData.name} already exist`)
-                    //console.log("Ja temos esse ingrediente")
-                }
+        for (let dishData of dishDataList) {
+            let ingredientExist = await Stock.findOne({ where: { name: dishData.name }, transaction: t } )
+            if (!ingredientExist) {
+                throw new Error(`Ingredient not exists: ${dishData.name}`)
             }
-        }; 
+            const [dishStock, newDishStock] = await DishStock.findOrCreate({
+                where: {
+                    [Op.and]: [
+                        { dishId: dishId  },
+                        { stockId: ingredientExist.dataValues.id }
+                    ]
+                },
+                defaults: {
+                    ingredient: dishData.name,
+                    dishId: dishId,
+                    quantity: dishData.quantity,
+                    stockId: ingredientExist.dataValues.id
+                },
+                transaction: t
+            });
+            dishList.push(dishStock)
+            if (!newDishStock) {
+                throw new Error(`Error in generate new Dish , ${dishData.name} already exist`)
+            }
+        }
         let serializedDish = serializer.serialize(dishList).data
-        await t.commit();
         return serializedDish
-    } catch (error: any) {
-        await t.rollback();
-        throw new Error(error.message)
-    }
 }

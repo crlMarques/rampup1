@@ -2,26 +2,27 @@ import { Request, Response } from "express";
 import Dish  from "../../db/models/dish"
 import sequelize from "../../db/config"
 import { Serializer } from "jsonapi-serializer";
+import { addDishStock } from "./add_dishStock";
 
-export async function addDish(dishList: { name: string }[]) {
+export async function addDish(dishList: { name: string, ingredient: { name: string, quantity: number, stockId: number }[]}) {
     const t = await sequelize.transaction();
     const serializer = new Serializer('dishes', {
         attributes: ['name'],
       });
     try {
-        let dishAddList: {}[] = [];
-        for (let dishName of dishList) {
-            const [dish, newDish] = await Dish.findOrCreate({
-                where: { name: dishName.name },
-                defaults: { name: dishName.name },
-                transaction: t
-            });
-            dishAddList.push(dish)
-            if (!newDish) {
-                throw new Error(`Error in generate new Dish, ${dishName.name} already exist`)
-            }
+        const [dish, newDish] = await Dish.findOrCreate({
+            where: { name: dishList.name },
+            defaults: { name: dishList.name },
+            transaction: t
+        });
+        if (!newDish) {
+            throw new Error(`Error in generate new Dish, ${dishList.name} already exist`)
         }
-        let serializedDish = serializer.serialize(dishAddList).data
+        console.log("\n\nVendo o dish:", dish)
+        let dishStock = await addDishStock(dishList.ingredient, dish.dataValues.id, t)
+        console.log("\n\n Vendo a saida do addDish:", dishStock)
+        let serializedDish = serializer.serialize(dish).data
+        serializedDish.include = dishStock;
         await t.commit();
         return serializedDish
     }catch (error: any) {

@@ -41,6 +41,17 @@ const Dishstock = sequelize.define('dishes_stocks', {
       key: 'id'
     },
     allowNull: false
+  },
+  ingredient: {
+    type: Sequelize.DataTypes.STRING,
+    references: {
+      model: {
+        tableName: 'stocks',
+        schema: 'public'
+      },
+      key: 'name'
+    },
+    allowNull: false
   }
 });
 
