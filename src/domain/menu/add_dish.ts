@@ -4,7 +4,7 @@ import sequelize from "../../db/config"
 import { Serializer } from "jsonapi-serializer";
 import { addDishStock } from "./add_dishStock";
 
-export async function addDish(dishList: { name: string, ingredient: { name: string, quantity: number, stockId: number }[]}) {
+export async function addDish(dishList: { name: string, ingredient: { name: string, quantity: number}[]}) {
     const t = await sequelize.transaction();
     const serializer = new Serializer('dishes', {
         attributes: ['name'],

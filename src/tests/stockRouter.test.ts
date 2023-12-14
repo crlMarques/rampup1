@@ -7,17 +7,22 @@ import { createOrder } from "../domain/client/ordered";
 import crypto from 'crypto'
 import stockList from '../infra/stock.json';
 
-let teste = [{
-    "name": "limão",
-    "quantity": 1
+let newStock = [{
+    "name": crypto.randomBytes(8).toString('hex'),
+    "quantity": 50
 }]
 
-let dishList = [{
-        "name": crypto.randomBytes(8).toString('hex')
-}]
-
+let newDish = {
+    "name": crypto.randomBytes(8).toString('hex'),
+    "ingredient": [
+        {
+            "name": `${newStock[0].name}`,
+            "quantity": 1
+        }
+    ]
+}
 let dishRemove = [{
-    "name": crypto.randomBytes(8).toString('hex')
+    "name": `${newDish.name}`
 }]
 
 let dishOrder = [{
@@ -26,29 +31,210 @@ let dishOrder = [{
 
 describe('Test stock use case', () => {
     test('Increase stock test', async () => {
-        expect(await increaseStock(teste)).toBe("Stock updated,\ningredient: limão, quantity: 85\n");
+        let ingredient = await increaseStock(newStock)
+        console.log(ingredient)
+        expect(ingredient[0].attributes).toStrictEqual({
+            "name": `${newStock[0].name}`,
+            "quantity": 50
+        })
     });
-}); 
+});
 
 describe('Test menu use case', () => {
     test('Add dish test', async () => {
-        expect(await addDish(dishList)).toBe(`Menu updated:\nNew dish: ${dishList[0].name}\n`);
-        await removeDish(dishList)
+        expect(await addDish(newDish)).toStrictEqual({
+            "type": "dishes",
+            "id": "59",//muda+1
+            "attributes": {
+                "name": `${newDish.name}`
+            },
+            "include": [
+                {
+                    "type": "ingredients",
+                    "id": "38",//muda+1
+                    "attributes": {
+                        "ingredient": `${newStock[0].name}`,
+                        "stock-id": 64,//muda+1
+                        "quantity": 1
+                    }
+                }
+            ]
+        });
     });
 
-        test('Dell dish test', async () => {
-        await addDish(dishRemove)  
-        expect(await removeDish(dishRemove)).toBe(`Menu updated:\nDish removed: ${dishRemove[0].name}\n`);   
+    test('Dell dish test', async () => {
+        expect(await removeDish(dishRemove)).toStrictEqual([
+            {
+                "type": "dishes",
+                "id": "59",//muda+1
+                "attributes": {
+                    "name": `${newDish.name}`
+                }
+            }
+        ]);
     });
 
-     test('Get dish test', async () => {
-         expect(await getMenuDishes()).toBe("Dish menu:\nPizza\nX-Burguer\nLasanha\nSalmão Grelhado\nRisoto de Cogumelos\nStrogonoff de Frango\nFeijoada\nNhoque de Batata\nSalada Caesar\nHambúrguer com Batata Frita\nPenne ao Molho Pesto\n");
-         //limitar quantos pratos eu desejo ver.
-     });
-}); 
+    test('Get dish test', async () => {
+        expect(await getMenuDishes()).toStrictEqual([
+            {
+                "type": "dishes",
+                "id": "1",
+                "attributes": {
+                    "name": "Pizza"
+                }
+            },
+            {
+                "type": "dishes",
+                "id": "2",
+                "attributes": {
+                    "name": "X-Burguer"
+                }
+            },
+            {
+                "type": "dishes",
+                "id": "3",
+                "attributes": {
+                    "name": "Lasanha"
+                }
+            },
+            {
+                "type": "dishes",
+                "id": "4",
+                "attributes": {
+                    "name": "Salmão Grelhado"
+                }
+            },
+            {
+                "type": "dishes",
+                "id": "5",
+                "attributes": {
+                    "name": "Risoto de Cogumelos"
+                }
+            },
+            {
+                "type": "dishes",
+                "id": "6",
+                "attributes": {
+                    "name": "Strogonoff de Frango"
+                }
+            },
+            {
+                "type": "dishes",
+                "id": "7",
+                "attributes": {
+                    "name": "Feijoada"
+                }
+            },
+            {
+                "type": "dishes",
+                "id": "8",
+                "attributes": {
+                    "name": "Nhoque de Batata"
+                }
+            },
+            {
+                "type": "dishes",
+                "id": "9",
+                "attributes": {
+                    "name": "Salada Caesar"
+                }
+            },
+            {
+                "type": "dishes",
+                "id": "10",
+                "attributes": {
+                    "name": "Hambúrguer com Batata Frita"
+                }
+            },
+            {
+                "type": "dishes",
+                "id": "11",
+                "attributes": {
+                    "name": "Penne ao Molho Pesto"
+                }
+            }
+        ]);
+    });
+});
 
 describe('Test client use case', () => {
     test('Client ordered', async () => {
-        expect(await createOrder(dishOrder)).toBe("Dish order:\n- Pizza\n");
+        expect(await createOrder(dishOrder)).toStrictEqual({
+            "data": [
+                {
+                    "type": "dishes",
+                    "id": "1",
+                    "attributes": {
+                        "name": "Pizza"
+                    }
+                }
+            ],
+            "included": [
+                {
+                    "type": "ingredients",
+                    "id": "40",
+                    "attributes": {
+                        "name": "queijo mussarela",
+                        "quantity": 44//-1
+                    }
+                },
+                {
+                    "type": "ingredients",
+                    "id": "3",
+                    "attributes": {
+                        "name": "molho de tomate",
+                        "quantity": 94//-1
+                    }
+                },
+                {
+                    "type": "ingredients",
+                    "id": "41",
+                    "attributes": {
+                        "name": "manjericão",
+                        "quantity": 49//-2
+                    }
+                },
+                {
+                    "type": "ingredients",
+                    "id": "33",
+                    "attributes": {
+                        "name": "cebola roxa",
+                        "quantity": 54//-1
+                    }
+                },
+                {
+                    "type": "ingredients",
+                    "id": "42",
+                    "attributes": {
+                        "name": "molho de maionese",
+                        "quantity": 24//-1
+                    }
+                },
+                {
+                    "type": "ingredients",
+                    "id": "39",
+                    "attributes": {
+                        "name": "massa de pizza",
+                        "quantity": 14//-1
+                    }
+                },
+                {
+                    "type": "ingredients",
+                    "id": "7",
+                    "attributes": {
+                        "name": "sal",
+                        "quantity": 94//-1
+                    }
+                },
+                {
+                    "type": "ingredients",
+                    "id": "8",
+                    "attributes": {
+                        "name": "pimenta",
+                        "quantity": 94//-1
+                    }
+                }
+            ]
+        });
     });
 });
